@@ -1,60 +1,242 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>성과공유회 초대장</title>
+
   <style>
+    /* 웹폰트 적용 */
+    @font-face {
+      font-family: 'KotraBold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.1/KOTRA_BOLD-Bold.woff') format('woff');
+      font-weight: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'KotraGothic';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/KOTRA_GOTHIC.woff') format('woff');
+      font-weight: normal;
+      font-display: swap;
+    }
+
     body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background-color: #fff9ef;
+      font-family: 'KotraGothic', sans-serif;
+      background-color: #ffffff;
       margin: 0;
       padding: 0;
       color: #333;
       text-align: center;
+      overflow-x: hidden;
     }
+
+    /* *************** CSS Confetti 애니메이션 추가 *************** */
+    .confetti-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10; /* 가장 위에 배치 */
+      overflow: hidden;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      opacity: 0.7;
+      border-radius: 2px;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* 파티클의 색상과 위치, 애니메이션 속도 설정 */
+    /* 50개의 파티클 생성 및 설정 */
+    /* 1~50까지 반복 */
+    <?php for ($i = 1; $i <= 50; $i++): ?>
+    .confetti:nth-child(<?php echo $i; ?>) {
+      left: <?php echo rand(0, 100); ?>%;
+      animation-duration: <?php echo rand(5, 15) / 10; ?>s;
+      animation-delay: <?php echo rand(0, 500) / 100; ?>s;
+      background-color: 
+        <?php 
+          $colors = ['#FFD93D', '#FF6B9D', '#6BCF7F', '#6B9DFF'];
+          echo $colors[array_rand($colors)]; 
+        ?>;
+      width: <?php echo rand(5, 12); ?>px;
+      height: <?php echo rand(5, 12); ?>px;
+    }
+    <?php endfor; ?>
+    /* PHP를 사용할 수 없는 환경을 위해 수동으로 최소 5개 이상 설정 */
+    .confetti:nth-child(1) { left: 10%; animation-duration: 4s; animation-delay: 0.5s; background-color: #FFD93D; }
+    .confetti:nth-child(2) { left: 20%; animation-duration: 5s; animation-delay: 1.2s; background-color: #FF6B9D; }
+    .confetti:nth-child(3) { left: 35%; animation-duration: 3s; animation-delay: 2.1s; background-color: #6BCF7F; }
+    .confetti:nth-child(4) { left: 50%; animation-duration: 6s; animation-delay: 0.0s; background-color: #6B9DFF; }
+    .confetti:nth-child(5) { left: 75%; animation-duration: 4.5s; animation-delay: 3s; background-color: #FFD93D; }
+    /* ****************************************************** */
+
+
+    /* 배경 장식 이미지 */
+    .decoration-img {
+      position: absolute;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    /* *************** 장식 이미지 위치 조정 *************** */
+    .deco-1 { /* 기존: top: -30px, right: -10px */
+      width: 80px;
+      top: -30px;
+      right: -10px;
+      z-index: 0;
+    }
+
+    .deco-2 { /* 기존: top: 150px, left: 10px */
+      width: 70px;
+      top: 150px;
+      left: 10px;
+      z-index: 0;
+    }
+
+    .deco-3 { /* 기존: top: 550px, right: 0px */
+      width: 90px;
+      top: 550px;
+      right: 0px;
+      z-index: 0;
+    }
+
+    .deco-4 { /* 기존: top: 850px, left: -15px */
+      width: 100px;
+      top: 850px;
+      left: -15px;
+      z-index: 0;
+    }
+
+    .deco-5 { /* 기존: top: 1300px, right: 10px */
+      width: 60px;
+      top: 1300px;
+      right: 10px;
+      z-index: 0;
+    }
+    /* ****************************************************** */
 
     .container {
-      max-width: 500px;
+      max-width: 600px;
       margin: 0 auto;
-      padding: 30px 20px 60px;
+      padding: 40px 20px 60px;
+      position: relative;
+      z-index: 5; /* 컨텐츠를 파티클 위에 배치 */
     }
 
-    .info {
-      background-color: #fff;
-      border-radius: 15px;
-      padding: 15px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      text-align: center;
-      margin-top: 20px;
+    h1 {
+      font-family: 'KotraBold';
+      font-size: 1.8em;
+      line-height: 1.6;
+      color: #333;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
     }
 
-    .info img {
-      width: 100%;
-      height: auto;
+    /* 추가된 인사말 스타일 */
+    .invitation-text {
+      font-size: 1em;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 40px;
+      padding: 0 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .highlight-yellow {
+      color: #FFD93D;
+    }
+
+    .highlight-pink {
+      color: #FF6B9D;
+    }
+
+    .highlight-green {
+      color: #6BCF7F;
+    }
+
+    /* 일시/장소 카드 스타일 */
+    .event-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin: 40px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .info-box {
+      background: white;
+      border: 1px solid #ddd;
       border-radius: 10px;
-      display: block;
+      padding: 20px 30px;
+      width: 85%;
+      max-width: 400px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* 카드 그림자 추가 */
+    }
+
+    .info-title {
+      font-family: 'KotraBold';
+      font-size: 1em;
+      color: #6BCF7F;
+      margin-bottom: 10px;
+    }
+
+    .info-text {
+      font-size: 1em;
+      color: #555;
+      line-height: 1.8;
     }
 
     h2 {
-      color: #36c98f;
-      margin-top: 40px;
-      font-size: 1.3em;
+      color: #6BCF7F;
+      font-size: 1.5em;
+      margin: 50px 0 25px;
+      font-family: 'KotraBold';
+      position: relative;
+      z-index: 1;
     }
 
     .session {
-      margin: 15px 0;
+      margin: 20px auto;
       text-align: left;
-      background: #fff;
-      border-radius: 15px;
-      padding: 15px 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 20px 30px;
+      max-width: 450px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03); /* 카드 그림자 추가 */
     }
 
     .session h3 {
-      color: #f5a623;
-      margin-bottom: 8px;
-      font-size: 1.1em;
+      color: #FF6B9D;
+      margin-bottom: 15px;
+      font-size: 1.2em;
+      font-family: 'KotraBold';
     }
 
     ul {
@@ -64,58 +246,188 @@
     }
 
     li {
-      font-size: 0.93em;
-      margin-bottom: 6px;
-      line-height: 1.5;
+      font-size: 0.95em;
+      margin-bottom: 8px;
+      line-height: 1.6;
+      color: #555;
     }
 
     li strong {
-      color: #36c98f;
+      color: #6BCF7F;
       display: inline-block;
-      width: 105px;
+      width: 110px;
+      font-family: 'KotraBold';
     }
 
-    a.btn {
-      display: inline-block;
-      background-color: #f5a623;
-      color: white;
-      text-decoration: none;
+    /* 오시는 길 스타일 */
+    .location-section {
+      margin: 50px auto;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 30px;
+      max-width: 450px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); /* 카드 그림자 추가 */
+    }
+
+    .location-section h2 {
+      margin-top: 0;
+      margin-bottom: 25px;
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 250px;
+      background-image: url('map.png');
+      background-size: cover;
+      background-position: center;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
+
+    .transport-info {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .transport-item {
+      margin-bottom: 18px;
+      padding: 12px;
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+    }
+
+    .transport-title {
+      color: #6BCF7F;
+      font-family: 'KotraBold';
+      font-size: 1em;
+      margin-bottom: 6px;
+    }
+
+    .transport-detail {
+      color: #555;
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    .highlight-text {
+      color: #FF6B9D;
       font-weight: 600;
-      padding: 12px 40px;
-      border-radius: 25px;
-      margin-top: 35px;
-      transition: background 0.2s ease-in-out;
     }
 
-    a.btn:hover {
-      background-color: #e3940e;
+    .link-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .link-buttons a {
+      flex: 1;
+      min-width: 140px;
+      max-width: 200px;
+      text-decoration: none;
+      color: white;
+      padding: 12px 0;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-family: 'KotraBold';
+      transition: 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .map {
+      background: #6BCF7F;
+    }
+
+    .copy {
+      background: #FFD93D;
+      color: #333;
+    }
+
+    .link-buttons a:hover {
+      opacity: 0.85;
     }
 
     footer {
-      margin-top: 40px;
-      font-size: 0.8em;
+      margin-top: 50px;
+      font-size: 0.85em;
       color: #888;
+    }
+    
+    /* 푸터 이미지 크기 조정 */
+    footer img {
+      width: 150px; /* 로고 크기 적절히 조정 */
+      display: block;
+      margin: 0 auto 10px;
     }
 
     @media (max-width: 480px) {
-      a.btn {
-        width: 80%;
-        padding: 12px 0;
+      h1 {
+        font-size: 1.4em;
       }
 
-      .info, .session {
-        padding: 15px;
+      .info-box {
+        width: 90%;
+      }
+
+      .link-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .session {
+        padding: 20px;
       }
     }
   </style>
 </head>
 <body>
+  <div class="confetti-wrapper">
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    <div class="confetti"></div>
+    </div>
   <div class="container">
-    <section class="info">
-      <img src="poster.png" alt="성과공유회 포스터">
-    </section>
+    <img src="Asset1.png" class="decoration-img deco-1" alt="">
+
+    <h1>
+      2025년 <span class="highlight-yellow">나답게</span> <span class="highlight-pink">나아가기</span> <span class="highlight-green">위드UP</span><br />
+      성과공유회에 초대합니다.
+    </h1>
+    
+    <p class="invitation-text">
+      한 해 동안 나답게 나아가기 위드UP 사업을 통해 얻은 소중한 성과와<br>
+      아름다운 성장의 결실을 나누는 자리에 귀한 분들을 모십니다.<br>
+      바쁘신 가운데 부디 참석하시어 자리를 빛내주시길 바랍니다.
+    </p>
+    <img src="Asset2.png" class="decoration-img deco-2" alt="">
+
+    <div class="event-info">
+      <div class="info-box">
+        <div class="info-title">일시</div>
+        <div class="info-text">2025년 12월 10일(수)<br>오후 2시</div>
+      </div>
+
+      <div class="info-box">
+        <div class="info-title">장소</div>
+        <div class="info-text">페럼타워 <span class="highlight-text">페럼홀</span><br>서울 중구 을지로 5길 19</div>
+        </div>
+    </div>
+
+    <img src="Asset3.png" class="decoration-img deco-3" alt="">
 
     <h2>식순 안내</h2>
+
+    <img src="Asset4.png" class="decoration-img deco-4" alt="">
 
     <div class="session">
       <h3>1부</h3>
@@ -137,11 +449,52 @@
       </ul>
     </div>
 
-    <a href="" class="btn">참가 신청하기</a>
+    <img src="Asset5.png" class="decoration-img deco-5" alt="">
+
+    <div class="location-section">
+      <h2>오시는 길</h2>
+      
+      <div class="map-placeholder"></div>
+
+      <div style="text-align: center; margin-bottom: 20px;">
+        <strong style="font-size: 1.1em; color: #333;">서울 중구 을지로 5길 19</strong><br>
+        <span style="color: #666; font-size: 0.95em;">페럼타워 3층 페럼홀</span>
+      </div>
+
+      <div class="transport-info">
+        <div class="transport-item">
+          <div class="transport-title">🚇 지하철 이용시</div>
+          <div class="transport-detail">
+            2호선 <span class="highlight-text">을지로입구역 3번출구</span> 도보 3분<br>
+            1호선 <span class="highlight-text">종각역 4번출구</span> 도보 10분
+            </div>
+        </div>
+        
+        <div class="transport-item">
+          <div class="transport-title">🚙 네비게이션</div>
+          <div class="transport-detail">
+            '페럼타워' 또는 '페럼홀' 검색
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="link-buttons">
+      <a href="https://naver.me/xlx936Hq" target="_blank" class="map">지도 보기</a>
+      <a href="#" class="copy" onclick="copyURL(); return false;">URL 복사</a>
+    </div>
 
     <footer>
+      <img src="/Asset6.png" alt="복권위원회, 사랑의열매, 전국지역아동센터협의회 로고">
       © 2025 복권위원회 · 사랑의열매 · 전국지역아동센터협의회
     </footer>
   </div>
+
+  <script>
+    function copyURL() {
+      navigator.clipboard.writeText(window.location.href);
+      alert('URL이 복사되었습니다!');
+    }
+  </script>
 </body>
 </html>

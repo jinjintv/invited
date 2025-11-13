@@ -391,10 +391,35 @@
         padding: 15px; /* 모바일에서 body 패딩 줄이기 */
       }
 
+      /* 1. 제목 크기 및 간격 조정 */
       h1 {
-        font-size: 1.4em;
+        font-size: 1.3em; /* 기존 1.4em에서 더 줄임 */
+        line-height: 1.4; /* 줄 높이 미세 조정 */
       }
       
+      /* 소개글 폰트 크기 조정 */
+      .invitation-text {
+        font-size: 0.95em;
+        line-height: 1.6;
+      }
+      
+      /* 2. 식순 목록 시간 너비 조정 */
+      li strong {
+        width: 90px; /* 기존 110px에서 90px로 축소 */
+        font-size: 0.9em; /* 목록 폰트 크기도 줄여 공간 확보 */
+      }
+      
+      li {
+        font-size: 0.9em; /* 목록 내용 폰트 크기 조정 */
+      }
+
+      /* 3. 지하철 이용 쪽 텍스트 조정 */
+      .transport-detail {
+        font-size: 0.85em; /* 폰트 크기를 더 줄여 한 줄에 들어가도록 유도 */
+        line-height: 1.5; /* 줄 높이 조정 */
+      }
+      
+      /* 버튼 및 기타 스타일은 유지 */
       .link-buttons {
         flex-direction: column;
         align-items: center;
@@ -414,6 +439,33 @@
 
       .session {
         padding: 20px;
+      }
+    }
+    @media (max-width: 400px) {
+      body {
+        font-size: 0.8rem; /* 본문 기본 폰트 크기를 0.75rem으로 설정 */
+      }
+      
+      /* 제목 및 기타 rem/em 기반 요소의 크기는 body의 폰트 크기에 비례하여 자동 조정됩니다.
+         필요하다면 특정 요소의 픽셀 크기를 여기서 재정의할 수 있습니다. */
+      
+      h1 {
+        font-size: 1.6em; /* 0.75rem * 1.6 = 1.2rem */
+      }
+
+      /* info-text, session li 등 1em 기준으로 작성된 요소들이 작아집니다. */
+      
+      .info-box {
+        padding: 15px 20px; /* 폰트가 작아진 만큼 패딩도 약간 조정 */
+      }
+
+      .session {
+        padding: 15px 20px;
+      }
+      
+      /* 모바일 버튼 크기 비율 유지 */
+      .link-buttons a {
+        padding: 10px 0;
       }
     }
   </style>

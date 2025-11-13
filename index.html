@@ -23,15 +23,25 @@
 
     body {
       font-family: 'KotraGothic', sans-serif;
-      background-color: #ffffff;
+      background-color: #f0f2f5; /* 배경색을 살짝 더 밝게 변경 */
       margin: 0;
       padding: 0;
       color: #333;
       text-align: center;
       overflow-x: hidden;
+      
+      /* *************** 모바일 전체 화면 중앙 정렬 및 여백 확보 *************** */
+      min-height: 100vh; /* 최소 높이를 화면 전체로 설정 */
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* 세로 중앙 정렬 */
+      align-items: center; /* 가로 중앙 정렬 */
+      padding: 20px; /* body 자체에 패딩을 주어 전체적인 여백 확보 */
+      box-sizing: border-box; /* 패딩이 전체 크기에 포함되도록 설정 */
+      /* ******************************************************************* */
     }
 
-    /* *************** CSS Confetti 애니메이션 추가 *************** */
+    /* *************** CSS Confetti 애니메이션 유지 *************** */
     .confetti-wrapper {
       position: fixed;
       top: 0;
@@ -39,7 +49,7 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 10; /* 가장 위에 배치 */
+      z-index: 10;
       overflow: hidden;
     }
 
@@ -63,23 +73,6 @@
       }
     }
 
-    /* 파티클의 색상과 위치, 애니메이션 속도 설정 */
-    /* 50개의 파티클 생성 및 설정 */
-    /* 1~50까지 반복 */
-    <?php for ($i = 1; $i <= 50; $i++): ?>
-    .confetti:nth-child(<?php echo $i; ?>) {
-      left: <?php echo rand(0, 100); ?>%;
-      animation-duration: <?php echo rand(5, 15) / 10; ?>s;
-      animation-delay: <?php echo rand(0, 500) / 100; ?>s;
-      background-color: 
-        <?php 
-          $colors = ['#FFD93D', '#FF6B9D', '#6BCF7F', '#6B9DFF'];
-          echo $colors[array_rand($colors)]; 
-        ?>;
-      width: <?php echo rand(5, 12); ?>px;
-      height: <?php echo rand(5, 12); ?>px;
-    }
-    <?php endfor; ?>
     /* PHP를 사용할 수 없는 환경을 위해 수동으로 최소 5개 이상 설정 */
     .confetti:nth-child(1) { left: 10%; animation-duration: 4s; animation-delay: 0.5s; background-color: #FFD93D; }
     .confetti:nth-child(2) { left: 20%; animation-duration: 5s; animation-delay: 1.2s; background-color: #FF6B9D; }
@@ -95,50 +88,69 @@
       opacity: 0.4;
       pointer-events: none;
     }
-
-    /* *************** 장식 이미지 위치 조정 *************** */
-    .deco-1 { /* 기존: top: -30px, right: -10px */
+    
+    /* *************** 장식 이미지 위치 조정 (전체 화면 여백에 따라 재조정) *************** */
+    /* deco-1, 2는 main-header-area 내에서만 움직이도록 조정 */
+    .deco-1 { 
       width: 80px;
-      top: -30px;
-      right: -10px;
+      top: 10px; 
+      right: 10px;
       z-index: 0;
     }
 
-    .deco-2 { /* 기존: top: 150px, left: 10px */
+    .deco-2 { 
       width: 70px;
-      top: 150px;
+      top: 100px;
       left: 10px;
       z-index: 0;
     }
 
-    .deco-3 { /* 기존: top: 550px, right: 0px */
+    .deco-3 { 
       width: 90px;
-      top: 550px;
+      top: 550px; 
       right: 0px;
       z-index: 0;
     }
 
-    .deco-4 { /* 기존: top: 850px, left: -15px */
+    .deco-4 { 
       width: 100px;
       top: 850px;
       left: -15px;
       z-index: 0;
     }
 
-    .deco-5 { /* 기존: top: 1300px, right: 10px */
+    .deco-5 { 
       width: 60px;
       top: 1300px;
       right: 10px;
       z-index: 0;
     }
+    /* ********************************************************************************* */
+
+    /* *************** Full-Width 헤더 영역 추가 *************** */
+    .main-header-area {
+      background-color: #ffffff; /* 흰색으로 배경색 변경 */
+      padding: 40px 20px 60px;
+      position: relative;
+      margin: 0;
+      border-radius: 15px 15px 0 0; /* 상단 라운드 처리 */
+      max-width: 600px; /* 전체 컨테이너와 동일하게 최대 너비 설정 */
+      width: 100%; /* 부모의 flex item으로 작동하도록 */
+      box-sizing: border-box;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05); /* 부드러운 그림자 추가 */
+    }
     /* ****************************************************** */
 
     .container {
       max-width: 600px;
-      margin: 0 auto;
-      padding: 40px 20px 60px;
+      width: 100%; /* 부모의 flex item으로 작동하도록 */
+      background-color: #ffffff; /* 흰색으로 배경색 변경 */
+      padding: 0 20px 60px;
       position: relative;
-      z-index: 5; /* 컨텐츠를 파티클 위에 배치 */
+      z-index: 5;
+      border-radius: 0 0 15px 15px; /* 하단 라운드 처리 */
+      box-sizing: border-box;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05); /* 부드러운 그림자 추가 */
     }
 
     h1 {
@@ -149,6 +161,9 @@
       margin-bottom: 20px;
       position: relative;
       z-index: 1;
+      max-width: 450px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* 추가된 인사말 스타일 */
@@ -156,10 +171,13 @@
       font-size: 1em;
       line-height: 1.8;
       color: #555;
-      margin-bottom: 40px;
+      margin-bottom: 0;
       padding: 0 10px;
       position: relative;
       z-index: 1;
+      max-width: 450px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .highlight-yellow {
@@ -194,7 +212,7 @@
       max-width: 400px;
       position: relative;
       z-index: 1;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* 카드 그림자 추가 */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     }
 
     .info-title {
@@ -229,7 +247,7 @@
       max-width: 450px;
       position: relative;
       z-index: 1;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03); /* 카드 그림자 추가 */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
     }
 
     .session h3 {
@@ -269,7 +287,7 @@
       max-width: 450px;
       position: relative;
       z-index: 1;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); /* 카드 그림자 추가 */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
     }
 
     .location-section h2 {
@@ -328,9 +346,6 @@
     }
 
     .link-buttons a {
-      flex: 1;
-      min-width: 140px;
-      max-width: 200px;
       text-decoration: none;
       color: white;
       padding: 12px 0;
@@ -340,6 +355,10 @@
       font-family: 'KotraBold';
       transition: 0.3s ease;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      
+      flex: 1;
+      min-width: 140px;
+      max-width: 200px;
     }
 
     .map {
@@ -361,25 +380,36 @@
       color: #888;
     }
     
-    /* 푸터 이미지 크기 조정 */
     footer img {
-      width: 150px; /* 로고 크기 적절히 조정 */
+      width: 150px;
       display: block;
       margin: 0 auto 10px;
     }
 
     @media (max-width: 480px) {
+      body {
+        padding: 15px; /* 모바일에서 body 패딩 줄이기 */
+      }
+
       h1 {
         font-size: 1.4em;
+      }
+      
+      .link-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .link-buttons a {
+        width: 80%;
+        max-width: 300px;
+        min-width: 0;
+        flex: none;
       }
 
       .info-box {
         width: 90%;
-      }
-
-      .link-buttons {
-        flex-direction: column;
-        gap: 10px;
       }
 
       .session {
@@ -395,8 +425,9 @@
     <div class="confetti"></div>
     <div class="confetti"></div>
     <div class="confetti"></div>
-    </div>
-  <div class="container">
+  </div>
+  
+  <div class="main-header-area">
     <img src="Asset1.png" class="decoration-img deco-1" alt="">
 
     <h1>
@@ -410,7 +441,8 @@
       바쁘신 가운데 부디 참석하시어 자리를 빛내주시길 바랍니다.
     </p>
     <img src="Asset2.png" class="decoration-img deco-2" alt="">
-
+  </div>
+  <div class="container">
     <div class="event-info">
       <div class="info-box">
         <div class="info-title">일시</div>
